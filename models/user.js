@@ -6,6 +6,7 @@ const mongoose = require('../utils/connection')
 // destructuring the Schema and model from mongoose
 const { Schema, model } = mongoose
 
+// try this out in a node repl to understand destructuring
 // const someObj = {
 //     a: 'something',
 //     b: 'something else',
