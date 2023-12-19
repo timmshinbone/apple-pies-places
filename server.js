@@ -28,7 +28,9 @@ middleware(app)
 /////////////////
 // basic home route
 app.get('/', (req, res) => {
-    res.send('the app is connected')
+    const { username, loggedIn, userId } = req.session
+    // res.send('the app is connected')
+    res.render('home.ejs', { username, loggedIn, userId })
 })
 
 //////////////////////////

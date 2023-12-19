@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand me-3">Places App</a>
+        <% if (loggedIn) {%>
+            <a href="/places/mine" class="nav-link text-warning me-3">Hello <% username %></a>
+        <% } %>
+        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarNav" class="collapse navbar-collapse me-3">
+            <% if (loggedIn) {%>
+                <a href="/places" class="nav-link text-light me-3">All Countries</a>
+                <a href="/places/new" class="nav-link text-light me-3">Add Country</a>
+                <a href="/users/logout" class="nav-link text-light me-3">Log Out</a>
+            <%} else {%>
+                <a href="/places" class="nav-link text-light me-3">All Countries</a>
+                <a href="/users/signup" class="nav-link text-light me-3">Sign Up</a>
+                <a href="/users/login" class="nav-link text-light me-3">Log In</a>
+            <% } %>
+        </div>
+    </div>
+</nav>
