@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+    <div class="container center">
+        <h2>All <%= username %>'s Places</h2>
+        <hr>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Region</th>
+                    <th scope="col">Sub Region</th>
+                    <th scope="col">Lat</th>
+                    <th scope="col">Long</th>
+                    <th scope="col">flagSmall</th>
+                    <th scope="col">Visited?</th>
+                    <th scope="col">Wishlist?</th>
+                    <th scope="col">Favorite?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% places.forEach((p) => { %>
+                    <tr>
+                        <td scope="row"><a href="/places/mine/<%= p.id %>"><%= p.name %></a></td>
+                        <td scope="row"><%= p.region %></td>
+                        <td scope="row"><%= p.subRegion %></td>
+                        <td scope="row"><%= p.lat %></td>
+                        <td scope="row"><%= p.long %></td>
+                        <td scope="row"><%= p.flagSmall %></td>
+                        <td scope="row"><%= p.visited ? 'Y' : 'N' %></td>
+                        <td scope="row"><%= p.wishlist ? 'Y' : 'N' %></td>
+                        <td scope="row"><%= p.favorite ? 'Y' : 'N' %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+<%- include('../partials/footer') %>

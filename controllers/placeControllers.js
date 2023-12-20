@@ -68,9 +68,27 @@ router.get('/mine', (req, res) => {
     Place.find({ owner: userId })
         // display them in a list format
         .then(userPlaces => {
-            res.send(userPlaces)
+            // res.send(userPlaces)
+            res.render('places/mine', { places: userPlaces, username, loggedIn, userId })
         })
         // or display any errors
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
+
+// GET -> /mine/:id
+// Will display a single instance of a user's saved places
+router.get('/mine/:id', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // find a specific place using the id
+    Place.findById(req.params.id)
+        // display a user-specific show pages
+        .then(thePlace => {
+            res.send(thePlace)
+        })
+        // send an error page if something goes wrong
         .catch(err => {
             console.log('error')
             res.redirect(`/error?error=${err}`)
