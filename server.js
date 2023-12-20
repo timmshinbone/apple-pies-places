@@ -36,6 +36,16 @@ app.get('/', (req, res) => {
 
 app.use('/users', UserRouter)
 
+// error page
+app.get('/error', (req, res) => {
+    const error = req.query.error || 'Ope! Something went wrong...try again'
+
+    const { username, loggedIn, userId } = req.session
+
+    // res.send(error)
+    res.render('error.ejs', { error, userId, username, loggedIn })
+})
+
 //////////////////////////
 //// Server Listener  ////
 //////////////////////////

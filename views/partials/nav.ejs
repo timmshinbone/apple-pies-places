@@ -9,11 +9,11 @@
         </button>
         <div id="navbarNav" class="collapse navbar-collapse me-3">
             <% if (loggedIn) {%>
-                <a href="/places" class="nav-link text-light me-3">All Countries</a>
+                <a href="/places/all" class="nav-link text-light me-3">All Countries</a>
                 <a href="/places/new" class="nav-link text-light me-3">Add Country</a>
                 <a href="/users/logout" class="nav-link text-light me-3">Log Out</a>
             <%} else {%>
-                <a href="/places" class="nav-link text-light me-3">All Countries</a>
+                <a href="/places/all" class="nav-link text-light me-3">All Countries</a>
                 <a href="/users/signup" class="nav-link text-light me-3">Sign Up</a>
                 <a href="/users/login" class="nav-link text-light me-3">Log In</a>
             <% } %>
