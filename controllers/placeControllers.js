@@ -5,6 +5,7 @@ const express = require('express')
 const axios = require('axios')
 const allPlacesUrl = process.env.COUNTRY_API_URL
 const nameSearchBaseUrl = process.env.C_BY_NAME_BASE_URL
+const Place = require('../models/place')
 
 ///////////////////////
 //// Create Router ////
@@ -28,6 +29,48 @@ router.get('/all', (req, res) => {
             res.render('places/index', { places: apiRes.data, username, userId, loggedIn})
         })
         // if something goes wrong, display an error page
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
+
+// POST -> /places/add
+// gets data from the all countries show pages and adds to the users list
+router.post('/add', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+
+    const thePlace = req.body
+    thePlace.owner = userId
+    // default value for a checked checkbox is 'on'
+    // this line of code converts that two times
+    // which results in a boolean value
+    thePlace.visited = !!thePlace.visited
+    thePlace.wishlist = !!thePlace.wishlist
+    thePlace.favorite = !!thePlace.favorite
+
+    Place.create(thePlace)
+        .then(newPlace => {
+            // res.send(newPlace)
+            res.redirect(`/places/mine`)
+        })
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
+
+// GET -> /places/mine
+// displays all the user's saved places
+router.get('/mine', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // query the db for all places belonging to the logged in user
+    Place.find({ owner: userId })
+        // display them in a list format
+        .then(userPlaces => {
+            res.send(userPlaces)
+        })
+        // or display any errors
         .catch(err => {
             console.log('error')
             res.redirect(`/error?error=${err}`)

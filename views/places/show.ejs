@@ -25,6 +25,33 @@
             </tr>
         </tbody>
     </table>
+    <hr>
+    <% if (loggedIn) {%>
+        <h5>Add this to your places?</h5>
+        <form action="/places/add" method="POST">
+            <fieldset>
+                <input hidden type="text" name="name" value="<%= place.name.official %>">
+                <input hidden type="text" name="region" value="<%= place.region %>">
+                <input hidden type="text" name="subRegion" value="<%= place.subregion %>">
+                <input hidden type="text" name="mapLink" value="<%= place.maps.googleMaps %>">
+                <input hidden type="number" name="lat" value="<%= place.latlng[0] %>">
+                <input hidden type="number" name="long" value="<%= place.latlng[1] %>">
+                <input hidden type="text" name="flag" value="<%= place.flags.svg %>">
+                <input hidden type="text" name="flagSmall" value="<%= place.flag %>">
+                <label for="visited">Visited?</label>
+                <input type="checkbox" name="visited" checked>
+                <label for="wishlist">Wishlist?</label>
+                <input type="checkbox" name="wishlist" checked>
+                <label for="favorite">Favorite?</label>
+                <input type="checkbox" name="favorite" checked>
+            </fieldset>
+            <input type="submit" class="btn btn-success" value="Add Place">
+        </form>
+    <% } else {%>
+        <p>Log in to start saving places!</p>
+    <% } %>
+    <hr>
+    <a href="/places/all" class="btn btn-warning">Back to All Countries</a>
 </div>
 
 <%- include('../partials/footer') %>
