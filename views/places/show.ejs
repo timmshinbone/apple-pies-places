@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<div class="container center">
+    <h2><%= place.name.official %></h2>
+    <div class="container col" style="width: 18rem">
+        <img src="<%= place.coatOfArms.svg %>" alt="coat of arms" class="coatOfArms">
+    </div>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Common Name</th>
+                <th scope="col">Capital</th>
+                <th scope="col">Region</th>
+                <th scope="col">Population</th>
+                <th scope="col">Flag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row"><%= place.name.common %></td>
+                <td scope="row"><%= place.capital %></td>
+                <td scope="row"><%= place.region %></td>
+                <td scope="row"><%= place.population %></td>
+                <td scope="row"><%= place.flag %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

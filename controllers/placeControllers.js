@@ -36,6 +36,27 @@ router.get('/all', (req, res) => {
 
 // GET -> /places/:name
 // give us a specific country's details after searching with the name
+router.get('/:name', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    const placeName = req.params.name
+    // could use destructuring, but no need with one item
+    // const { placeName } = req.params
+    // make our api call
+    axios(`${nameSearchBaseUrl}${placeName}`)
+        // render the results on a 'show' page: aka 'detail' page
+        .then(apiRes => {
+            console.log('this is apiRes.data: \n', apiRes.data)
+            // a single place is apiRes.data[0]
+            const foundPlace = apiRes.data[0]
+            // res.send(foundPlace)
+            res.render('places/show', { place: foundPlace, username, loggedIn, userId })
+        })
+        // if we get an error, display the error
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
 
 
 ///////////////////////
