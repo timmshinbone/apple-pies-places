@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+
+<div class="container center">
+    <div class="container row text-center">
+        <% places.forEach(function(p) {%>
+            <div class="card mt-3 me-3 countryCard">
+                <img src="<%= p.flags.svg %>" alt="flag of country" class="card-img-top mt-3">
+                <div class="card-body">
+                    <h5 class="card-title"><%= p.name.official %></h5>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
