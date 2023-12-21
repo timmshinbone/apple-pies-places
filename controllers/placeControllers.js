@@ -86,7 +86,8 @@ router.get('/mine/:id', (req, res) => {
     Place.findById(req.params.id)
         // display a user-specific show pages
         .then(thePlace => {
-            res.send(thePlace)
+            // res.send(thePlace)
+            res.render('places/mineDetail', { place: thePlace, username, loggedIn, userId })
         })
         // send an error page if something goes wrong
         .catch(err => {
@@ -95,7 +96,40 @@ router.get('/mine/:id', (req, res) => {
         })
 })
 
+// DELETE -> /places/delete/:id
+// Remove places from a user's list, and is only available to authorized user
+router.delete('/delete/:id', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // target the specific place
+    const placeId = req.params.id
+    // find it in the database
+    Place.findById(placeId)
+        // delete it 
+        .then(place => {
+            // determine if loggedIn user is authorized to delete this(aka, the owner)
+            if (place.owner == userId) {
+                // here is where we delete
+                return place.deleteOne()
+            } else {
+                // if the loggedIn user is NOT the owner
+                res.redirect(`/error?error=You%20Are%20Not%20Allowed%20to%20Delete%20this%20Place`)
+            }
+            // redirect to another page
+        })
+        .then(deletedPlace => {
+            console.log('this was returned from deleteOne', deletedPlace)
+
+            res.redirect('/places/mine')
+        })
+        // if err -> send to err page
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
+
 // GET -> /places/:name
+// API data show page -> least specific - goes under all more specific routes
 // give us a specific country's details after searching with the name
 router.get('/:name', (req, res) => {
     const { username, loggedIn, userId } = req.session
@@ -118,6 +152,8 @@ router.get('/:name', (req, res) => {
             res.redirect(`/error?error=${err}`)
         })
 })
+
+
 
 
 ///////////////////////

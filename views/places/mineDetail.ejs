@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<!-- <iframe src="<%=place.mapLink%>&output=embed" frameborder="1"></iframe> -->
+
+<div class="container center text-center">
+    <h2><%= place.name %></h2>
+    <img src="<%=place.flag%>" alt="flag" class="container center mt-3">
+    <div class="container col" style="width: 18rem">
+        
+    </div>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Region</th>
+                <th scope="col">Sub Region</th>
+                <th scope="col">Map Link</th>
+                <th scope="col">Latitude</th>
+                <th scope="col">Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row"><%= place.name %></td>
+                <td scope="row"><%= place.region %></td>
+                <td scope="row"><%= place.subRegion %></td>
+                <td scope="row"><a href="<%= place.mapLink %>" target="_blank">Map Link</a></td>
+                <!-- <td scope="row"><a href="<img src="<%= place.mapLink %>"" alt="Maps"></td> -->
+                <td scope="row"><%= place.lat %></td>
+                <td scope="row"><%= place.long %></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="btn-group">
+        <a href="/places/all" class="btn btn-warning me-3">Back to All Countries</a>
+        <form action="/places/delete/<%= place._id %>?_method=DELETE" method="POST">
+            <input type="submit" class="btn btn-danger" value="Delete this Place">
+        </form>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer') %>
