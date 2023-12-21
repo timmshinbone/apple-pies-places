@@ -17,6 +17,9 @@
                 <th scope="col">Map Link</th>
                 <th scope="col">Latitude</th>
                 <th scope="col">Longitude</th>
+                <th scope="col">Visited</th>
+                <th scope="col">Wishlist</th>
+                <th scope="col">Favorite</th>
             </tr>
         </thead>
         <tbody>
@@ -28,10 +31,35 @@
                 <!-- <td scope="row"><a href="<img src="<%= place.mapLink %>"" alt="Maps"></td> -->
                 <td scope="row"><%= place.lat %></td>
                 <td scope="row"><%= place.long %></td>
-
+                <td scope="row"><%= place.visited ? 'Y' : 'N' %></td>
+                <td scope="row"><%= place.wishlist ? 'Y' : 'N' %></td>
+                <td scope="row"><%= place.favorite ? 'Y' : 'N' %></td>
             </tr>
         </tbody>
     </table>
+    <hr>
+    <div class="container">
+        <form action="/places/update/<%= place._id %>?_method=PUT" method="POST">
+            <fieldset>
+                <input hidden type="text" name="name" value="<%= place.name %>">
+                <input hidden type="text" name="region" value="<%= place.region %>">
+                <input hidden type="text" name="subRegion" value="<%= place.subRegion %>">
+                <input hidden type="text" name="mapLink" value="<%= place.mapLink %>">
+                <input hidden type="number" name="lat" value="<%= place.lat %>">
+                <input hidden type="number" name="long" value="<%= place.long %>">
+                <input hidden type="text" name="flag" value="<%= place.flag %>">
+                <input hidden type="text" name="flagSmall" value="<%= place.flagSmall %>">
+                <label for="visited">Visited?</label>
+                <input type="checkbox" name="visited" <%= place.visited ? 'checked' : '' %>>
+                <label for="wishlist">Wishlist?</label>
+                <input type="checkbox" name="wishlist" <%= place.wishlist ? 'checked' : '' %>>
+                <label for="favorite">Favorite?</label>
+                <input type="checkbox" name="favorite" <%= place.favorite ? 'checked' : '' %>>
+                <input type="submit" class="btn btn-success" value="Update Place">
+            </fieldset>
+        </form>
+    </div>
+    <hr>
     <div class="btn-group">
         <a href="/places/all" class="btn btn-warning me-3">Back to All Countries</a>
         <form action="/places/delete/<%= place._id %>?_method=DELETE" method="POST">

@@ -96,6 +96,52 @@ router.get('/mine/:id', (req, res) => {
         })
 })
 
+// UPDATE -> /places/update/:id
+router.put('/update/:id', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // target the specific place
+    const placeId = req.params.id
+
+    const theUpdatedPlace = req.body
+
+    // sometimes mean hackers try to steal stuff
+    // remove the ownership from req.body(even if it isn't sent)
+    // then reassign using the session info
+    delete theUpdatedPlace.owner
+    theUpdatedPlace.owner = userId
+
+    // default value for a checked checkbox is 'on'
+    // this line of code converts that two times
+    // which results in a boolean value
+    theUpdatedPlace.visited = !!theUpdatedPlace.visited
+    theUpdatedPlace.wishlist = !!theUpdatedPlace.wishlist
+    theUpdatedPlace.favorite = !!theUpdatedPlace.favorite
+
+    console.log('this is req.body', theUpdatedPlace)
+    // find the place
+    Place.findById(placeId)
+        // check for authorization(aka ownership)
+        // if they are the owner, allow update and refresh the page
+        .then(foundPlace => {
+            // determine if loggedIn user is authorized to update this(aka, the owner)
+            if (foundPlace.owner == userId) {
+                // here is where we update
+                return foundPlace.updateOne(theUpdatedPlace)
+            } else {
+                // if the loggedIn user is NOT the owner
+                res.redirect(`/error?error=You%20Are%20Not%20Allowed%20to%20Update%20this%20Place`)
+            }
+        })
+        .then(returnedPlace => {
+            res.redirect(`/places/mine/${placeId}`)
+        })
+        // if not, send error
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
+
 // DELETE -> /places/delete/:id
 // Remove places from a user's list, and is only available to authorized user
 router.delete('/delete/:id', (req, res) => {
@@ -114,8 +160,8 @@ router.delete('/delete/:id', (req, res) => {
                 // if the loggedIn user is NOT the owner
                 res.redirect(`/error?error=You%20Are%20Not%20Allowed%20to%20Delete%20this%20Place`)
             }
-            // redirect to another page
         })
+        // redirect to another page
         .then(deletedPlace => {
             console.log('this was returned from deleteOne', deletedPlace)
 
