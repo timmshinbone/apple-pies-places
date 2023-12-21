@@ -37,34 +37,36 @@
             </tr>
         </tbody>
     </table>
-    <hr>
-    <div class="container">
-        <form action="/places/update/<%= place._id %>?_method=PUT" method="POST">
-            <fieldset>
-                <input hidden type="text" name="name" value="<%= place.name %>">
-                <input hidden type="text" name="region" value="<%= place.region %>">
-                <input hidden type="text" name="subRegion" value="<%= place.subRegion %>">
-                <input hidden type="text" name="mapLink" value="<%= place.mapLink %>">
-                <input hidden type="number" name="lat" value="<%= place.lat %>">
-                <input hidden type="number" name="long" value="<%= place.long %>">
-                <input hidden type="text" name="flag" value="<%= place.flag %>">
-                <input hidden type="text" name="flagSmall" value="<%= place.flagSmall %>">
-                <label for="visited">Visited?</label>
-                <input type="checkbox" name="visited" <%= place.visited ? 'checked' : '' %>>
-                <label for="wishlist">Wishlist?</label>
-                <input type="checkbox" name="wishlist" <%= place.wishlist ? 'checked' : '' %>>
-                <label for="favorite">Favorite?</label>
-                <input type="checkbox" name="favorite" <%= place.favorite ? 'checked' : '' %>>
-                <input type="submit" class="btn btn-success" value="Update Place">
-            </fieldset>
-        </form>
-    </div>
+    <% if (place.owner == userId) {%>
+        <hr>
+        <div class="container d-inline-flex justify-content-center">
+            <form class="me-3" action="/places/update/<%= place._id %>?_method=PUT" method="POST">
+                <fieldset>
+                    <input hidden type="text" name="name" value="<%= place.name %>">
+                    <input hidden type="text" name="region" value="<%= place.region %>">
+                    <input hidden type="text" name="subRegion" value="<%= place.subRegion %>">
+                    <input hidden type="text" name="mapLink" value="<%= place.mapLink %>">
+                    <input hidden type="number" name="lat" value="<%= place.lat %>">
+                    <input hidden type="number" name="long" value="<%= place.long %>">
+                    <input hidden type="text" name="flag" value="<%= place.flag %>">
+                    <input hidden type="text" name="flagSmall" value="<%= place.flagSmall %>">
+                    <label for="visited">Visited?</label>
+                    <input type="checkbox" name="visited" <%= place.visited ? 'checked' : '' %>>
+                    <label for="wishlist">Wishlist?</label>
+                    <input type="checkbox" name="wishlist" <%= place.wishlist ? 'checked' : '' %>>
+                    <label for="favorite">Favorite?</label>
+                    <input type="checkbox" name="favorite" <%= place.favorite ? 'checked' : '' %>>
+                    <input type="submit" class="btn btn-success" value="Update Place">
+                </fieldset>
+            </form>
+            <form class="me-3" action="/places/delete/<%= place._id %>?_method=DELETE" method="POST">
+                <input type="submit" class="btn btn-danger" value="Delete this Place">
+            </form>
+        </div>
+    <% } %>
     <hr>
     <div class="btn-group">
         <a href="/places/all" class="btn btn-warning me-3">Back to All Countries</a>
-        <form action="/places/delete/<%= place._id %>?_method=DELETE" method="POST">
-            <input type="submit" class="btn btn-danger" value="Delete this Place">
-        </form>
     </div>
 </div>
 
