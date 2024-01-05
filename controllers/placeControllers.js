@@ -23,7 +23,7 @@ router.get('/all', (req, res) => {
     axios(allPlacesUrl)
         // if we get data, render an index page
         .then(apiRes => {
-            console.log('this came back from the api: \n', apiRes.data[0])
+            // console.log('this came back from the api: \n', apiRes.data[0])
             // apiRes.data is an array of country objects
             // res.send(apiRes.data)
             res.render('places/index', { places: apiRes.data, username, userId, loggedIn})
@@ -117,7 +117,7 @@ router.put('/update/:id', (req, res) => {
     theUpdatedPlace.wishlist = !!theUpdatedPlace.wishlist
     theUpdatedPlace.favorite = !!theUpdatedPlace.favorite
 
-    console.log('this is req.body', theUpdatedPlace)
+    // console.log('this is req.body', theUpdatedPlace)
     // find the place
     Place.findById(placeId)
         // check for authorization(aka ownership)
@@ -163,7 +163,7 @@ router.delete('/delete/:id', (req, res) => {
         })
         // redirect to another page
         .then(deletedPlace => {
-            console.log('this was returned from deleteOne', deletedPlace)
+            // console.log('this was returned from deleteOne', deletedPlace)
 
             res.redirect('/places/mine')
         })
@@ -186,7 +186,7 @@ router.get('/:name', (req, res) => {
     axios(`${nameSearchBaseUrl}${placeName}`)
         // render the results on a 'show' page: aka 'detail' page
         .then(apiRes => {
-            console.log('this is apiRes.data: \n', apiRes.data)
+            // console.log('this is apiRes.data: \n', apiRes.data)
             // a single place is apiRes.data[0]
             const foundPlace = apiRes.data[0]
             // res.send(foundPlace)
